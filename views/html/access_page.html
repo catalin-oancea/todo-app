@@ -1,0 +1,172 @@
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shared pad</title>
+
+    <link href="/static/resources/inspinia/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+    <link href="/static/resources/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/resources/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="/static/resources/inspinia/css/animate.css" rel="stylesheet">
+    <link href="/static/resources/inspinia/css/style.css" rel="stylesheet">
+
+    <script src="/static/resources/inspinia/js/jquery-2.1.1.js"></script>
+    <script src="/static/resources/inspinia/js/plugins/toastr/toastr.min.js"></script>
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="loginColumns animated fadeInDown">
+        <div class="row">
+
+            <div class="col-md-6">
+                <h2 class="font-bold">Welcome to todoo</h2>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pulvinar egestas lorem sollicitudin pretium.
+                </p>
+
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                    text ever since the 1500s.
+                </p>
+
+                <p>
+                    When an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+
+                <p>
+                    <small>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</small>
+                </p>
+
+            </div>
+            <div class="col-md-6">
+                <div class="ibox-content">
+                    <div id="login_box">
+                        <form class="m-t" role="form" method="post" id="login_form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Username" required="" id="username_l">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Password" required="" id="password_l">
+                            </div>
+                            <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+
+                            <br/>
+
+                            <p class="text-muted text-center">
+                                <small>Do not have an account?</small>
+                            </p>
+                            <a href="#" class="btn btn-sm btn-white btn-block" id="to_register">Create an account</a>
+                        </form>
+                        <br/>
+                    </div>
+                    <div id="register_box" style="display: none;">
+                        <form class="m-t" role="form" method="post" id="register_form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Username" required="" id="username_r">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email" required="" id="email_r">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Password" required="" id="password_r">
+                            </div>
+                            <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+
+                            <br/>
+
+                            <p class="text-muted text-center">
+                                <small>Already have an account?</small>
+                            </p>
+                            <a href="#" class="btn btn-sm btn-white btn-block" id="to_login">Login now</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                Copyright todoo
+            </div>
+            <div class="col-md-6 text-right">
+                <small>© 2016-present</small>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        jQuery(function($) {
+            toastr.options = {
+                'closeButton': true,
+                'debug': false,
+                'progressBar': true,
+                'preventDuplicates': false,
+                'positionClass': 'toast-top-right',
+                'onclick': null,
+                'showDuration': '400',
+                'hideDuration': '1000',
+                'timeOut': "3000",
+                'extendedTimeOut': '1000',
+                'showEasing': 'swing',
+                'hideEasing': 'linear',
+                'showMethod': 'fadeIn',
+                'hideMethod': 'fadeOut'
+            };
+
+            $('#login_form').submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                      type: 'POST',
+                      url: '/authenticate',
+                      data: {username: $('#username_l').val(), password: $('#password_l').val()},
+                      success: function(data) {
+                          if(data['success'] === true) {
+                              window.location = '/task_view';
+                          } else {
+                              toastr.error('Oops! Username and password don\'t match. Please try again.');
+                          }
+                      }
+                });
+            });
+
+            $('#register_form').submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                      type: 'POST',
+                      url: '/register',
+                      data: {username: $('#username_r').val(), email: $('#email_r').val(), password: $('#password_r').val()},
+                      success: function(data) {
+                          if(data['success'] === true) {
+                              toastr.success('Yaay! Your account has been created successfully. You can now log in.');
+                              $('#register_form')[0].reset();
+                          } else {
+                              toastr.error('Oops! Username and/or email already in use. Please try again.');
+                          }
+                      }
+                });
+            });
+
+            $('#to_login').click(function(event) {
+                $('#register_box').hide();
+                $('#login_box').show();
+            });
+
+            $('#to_register').click(function(event) {
+                $('#login_box').hide();
+                $('#register_box').show();
+            })
+        });
+    </script>
+
+
+</body>
+
+</html>

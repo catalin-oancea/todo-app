@@ -1,0 +1,20 @@
+{
+    "name": "text_editor",
+    "version": "0.0.1",
+    "private": "true",
+    "dependencies": {
+        "socket.io": "*",
+        "express": "*",
+        "cookie-parser": "*",
+        "mongoose": "*",
+        "morgan": "*",
+        "passport": "*",
+        "passport-jwt": "*",
+        "bcrypt-nodejs": "*",
+        "body-parser": "*",
+        "jwt-simple": "*",
+        "socketio-jwt": "*",
+        "mongoose-type-email": "*",
+        "uuid": "*"
+    }
+}

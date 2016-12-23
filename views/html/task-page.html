@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <title> todoo </title>
+    <link href="/static/resources/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/resources/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+
+    <link href="/static/resources/inspinia/css/animate.css" rel="stylesheet">
+    <link href="/static/resources/inspinia/css/style.css" rel="stylesheet">
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.5.2/angular-cookies.js"></script>
+</head>
+
+<body data-ng-app="TaskApp" data-ng-controller="TaskController">
+
+    <div class="container">
+        <h1 style="color: white; text-align: center; font-weight: bold; font-size: 55px;">todoo</h1>
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <input class="form-control" type="text" placeholder="Task description" data-ng-model="task_description" ng-enter="AddNewTask()" />
+            </div>
+            <div class="ibox-content">
+
+                <div>
+                    <div class="feed-activity-list">
+                        <div class="feed-element" data-ng-repeat="task in tasks">
+                            <div class="media-body ">
+                                <small class="pull-right">{{task.date_added | date:'dd/MM/yyyy @ hh:mma'}}</small>
+                                <input type="checkbox" data-ng-click="MarkAsDone(task.task_guid)"/> {{task.task_description}}
+
+                            </div>
+                        </div>
+
+                        <div data-ng-show="tasks.length === 0" style="text-align: center;">
+                            <h3>There are no items in your list!</h3>
+                            <span style="color: silver">You can add tasks directly by entering thei description.</span>
+                        </div>
+
+                    </div>
+
+                    <!-- <button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button> -->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="/views/angular/task_app.js"></script>
+</body>
+
+</html>
