@@ -3,4 +3,4 @@ Simple todo app.
 
 <hr>
 
-![] (todo.png)
+![](todo.png)
